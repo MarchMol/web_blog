@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import './Login.css'
 
-function App() {
+function Login () {
 
-  return (
-  <div class="container">
+    return (
+    <>
+    <div class="container">
         <h1>Login</h1>
         <form action="/login" method="POST">
             <div class="field">
@@ -16,11 +16,10 @@ function App() {
                 <label>Password:</label>
                 <input type="password" id="password" name="password" required />
             </div>
-            <button type="submit">Login</button>
         </form>
-        <p>Don't have an account? <a href="/register">Register here</a></p>
+        <button type="submit">Login</button>
     </div>
-  )
-}
+    </>
+)}
 
-export default App
+export default Login
