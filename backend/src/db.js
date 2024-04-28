@@ -7,7 +7,7 @@ export async function getAllPosts() {
         const result = await client.query('SELECT * FROM movie_blog');
 
         console.log(result.rows);
-        return rows
+        return result.rows
     } catch (error) {
         console.error('Error seleccionando registros', error);
 
