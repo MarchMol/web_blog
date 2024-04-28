@@ -1,6 +1,5 @@
 import express from 'express'
-import pool from './src/conn.js'
-import { getAllPosts } from './src/db.js';
+import { getAllPosts, createPost } from './src/db.js';
 
 import { body, validationResult } from 'express-validator'
 
