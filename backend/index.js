@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllPosts, createPost } from './src/db.js';
+import { getAllPosts, createPost, authUser } from './src/db.js';
 
 import { body, validationResult } from 'express-validator'
 
@@ -33,7 +33,7 @@ app.listen(port, () => {
 
 app.post('/posts/', [
   body('title').notEmpty().isString(),
-  body('content').notEmpty().isURL(),
+  body('content').notEmpty().isString(),
   body('image_url').notEmpty().isURL(),
 ], async (req, res) => {
   const errors = validationResult(req)
@@ -47,6 +47,26 @@ app.post('/posts/', [
 
   try {
     const posts = await createPost(title, content, image_url)
+    return res.json(posts)
+  } catch (error) {
+    return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })
+  }
+})
+
+app.post('/login', [
+  body('username').notEmpty().isString(),
+  body('password').notEmpty().isString(),
+], async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: 'Formato incorrecto' })
+  }
+  const {
+    username, password,
+  } = req.body
+
+  try {
+    const posts = await authUser(username, password)
     return res.json(posts)
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })

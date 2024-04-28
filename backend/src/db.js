@@ -36,3 +36,21 @@ export async function createPost(title, content, image_url) {
         }
     }
 }
+
+export async function authUser(username, password) {
+    let client;
+    try {
+        client = await conn.connect();
+        const result = await conn.query(`SELECT * FROM auth_credentials('${username}','${password}')`)
+
+        console.log(result.rows[0]);
+        return result.rows[0]
+    } catch (error) {
+        console.error('Error autenticando usuario', error);
+
+    } finally {
+        if (client) {
+            client.release();
+        }
+    }
+}
