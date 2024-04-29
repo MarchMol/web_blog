@@ -68,12 +68,17 @@ app.post('/login/', [
 
   try {
     const posts = await authUser(username, password)
-    console.log(posts+"AAAAA")
-    if(posts.auth_credentials){
-      return res.json(posts)
+    const success = posts.auth_credentials
+    if(success){
+      const user = {username}
+      const token = generateToken(user)
+      res.status(200)
+      res.json({"success": true, access_token: token})
+      return 
     }
     else{
-      return res.status(400).json({ error: 'Credenciales Incorrectas' })
+      res.status(401).json({ "success": false })
+      return 
     }
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })
