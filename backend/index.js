@@ -68,8 +68,8 @@ app.post('/login/', [
 
   try {
     const posts = await authUser(username, password)
-    console.log(posts)
-    if(posts){
+    console.log(posts+"AAAAA")
+    if(posts.auth_credentials){
       return res.json(posts)
     }
     else{
