@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllPosts, createPost, authUser } from './src/db.js';
+import { getAllPosts, authUser } from './src/db.js';
 import cors from 'cors'
 import { generateToken } from './jwt.js';
 import { body, validationResult } from 'express-validator'
@@ -19,10 +19,12 @@ app.use(express.json())
 
 const port = process.env.PORT
 
+// default, no path endpoint
 app.get('/', (req, res) => {
   res.send('noice noice')
 })
 
+// Get posts endpoint
 app.get('/posts', async (req,res)=> {
   try {
     const posts = await getAllPosts()
@@ -65,6 +67,7 @@ app.post('/login/', [
   }
 })
 
+// Listener
 app.listen(port, () => {
   console.log(`Server listening at http://127.0.0.1:${port}`)
 })
