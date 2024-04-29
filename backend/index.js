@@ -68,7 +68,7 @@ app.post('/login/', [
 
   try {
     const posts = await authUser(username, password)
-    const success = posts.auth_credentials
+    const success = await posts.auth_credentials
     if(success){
       const user = {username}
       const token = generateToken(user)
