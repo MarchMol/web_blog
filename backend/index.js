@@ -9,7 +9,12 @@ const require = createRequire(import.meta.url);
 require('dotenv').config();
 
 const app = express()
-app.use(cors())
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST'], 
+  allowedHeaders: ['Content-Type'], 
+};
+app.use(cors(corsOptions));
 app.use(express.json())
 
 const port = process.env.PORT
@@ -49,9 +54,9 @@ app.post('/posts/', [
   }
 })
 
-app.post('/login', [
-  body('username').notEmpty().isString(),
-  body('password').notEmpty().isString(),
+app.post('/login/', [
+  body('username').notEmpty(),
+  body('password').notEmpty(),
 ], async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
