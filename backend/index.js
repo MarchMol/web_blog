@@ -14,11 +14,11 @@ app.use(express.json())
 
 const port = process.env.PORT
 
-app.get('/', cors(), (req, res) => {
+app.get('/', (req, res) => {
   res.send('noice noice')
 })
 
-app.get('/posts', cors(), async (req,res)=> {
+app.get('/posts', async (req,res)=> {
   try {
     const posts = await getAllPosts()
     res.status(200).json(posts)
@@ -27,7 +27,7 @@ app.get('/posts', cors(), async (req,res)=> {
   }
 })
 
-app.post('/posts/', cors(), [
+app.post('/posts/', [
   body('title').notEmpty().isString(),
   body('content').notEmpty().isString(),
   body('image_url').notEmpty().isURL(),
@@ -49,7 +49,7 @@ app.post('/posts/', cors(), [
   }
 })
 
-app.post('/login', cors(), [
+app.post('/login', [
   body('username').notEmpty().isString(),
   body('password').notEmpty().isString(),
 ], async (req, res) => {

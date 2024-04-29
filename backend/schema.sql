@@ -13,11 +13,11 @@ CREATE TABLE movie_blog (
 -- User Table --
 CREATE TABLE users(
     username VARCHAR(255) NOT NULL,
-    password CHAR(60) NOT NULL
+    password VARCHAR(255) NOT NULL
 );
 
 -- Auth method implemented from the database
-CREATE OR REPLACE FUNCTION auth_credentials(in_username VARCHAR(255), in_password VARCHAR(50))
+CREATE OR REPLACE FUNCTION auth_credentials(in_username VARCHAR(255), in_password VARCHAR(255))
 RETURNS BOOLEAN AS
 $$
 DECLARE
@@ -26,7 +26,7 @@ BEGIN
     SELECT EXISTS (
         SELECT 1
         FROM users
-        WHERE username = in_username AND password = crypt(in_password, password)
+        WHERE username = in_username AND password = in_password
     ) INTO user_exists;
     RETURN user_exists;
 END;
