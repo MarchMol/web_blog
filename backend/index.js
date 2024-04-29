@@ -32,28 +32,8 @@ app.get('/posts', async (req,res)=> {
   }
 })
 
-app.post('/posts/', [
-  body('title').notEmpty().isString(),
-  body('content').notEmpty().isString(),
-  body('image_url').notEmpty().isURL(),
-], async (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: 'Formato incorrecto' })
-  }
 
-  const {
-    title, content, image_url,
-  } = req.body
-
-  try {
-    const posts = await createPost(title, content, image_url)
-    return res.json(posts)
-  } catch (error) {
-    return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })
-  }
-})
-
+// Login Endpoint
 app.post('/login/', [
   body('username').notEmpty(),
   body('password').notEmpty(),

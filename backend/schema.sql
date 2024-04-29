@@ -2,13 +2,19 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- Blog Table
-CREATE TABLE movie_blog (
+CREATE TABLE music_blog (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    publish_date DATE NOT NULL,
-    image_url VARCHAR(255)
+    name VARCHAR(255),
+    album VARCHAR(255),
+    artist VARCHAR(255),
+    music TEXT,
+    cover_art TEXT, 
+    content TEXT,
+    rank DOUBLE PRECISION,
+    album_date DATE,
+    post_date TIMESTAMP 
 );
+
 
 -- User Table --
 CREATE TABLE users(
@@ -32,3 +38,9 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+-- INSERTS --
+
+INSERT INTO music_blog (name, album, artist, music, cover_art, content, rank, album_date, post_date) 
+VALUES 
+('Dummy', 'Chris Black Changed My Life', 'Portugal. The Man', 'https://www.youtube.com/watch?v=8xT0vWporWs', 'https://i.scdn.co/image/ab67616d0000b273a9c3cd9374b929b927e982c2','"Dummy" de Portugal The Man es una canción envolvente que combina ritmos vibrantes con letras introspectivas y trágicas con una fusión de géneros y energía contagiosa.', 4.8, '2023-06-22', CURRENT_TIMESTAMP);
