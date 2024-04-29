@@ -1,24 +1,25 @@
 import express from 'express'
 import { getAllPosts, createPost, authUser } from './src/db.js';
+import cors from 'cors'
 
 import { body, validationResult } from 'express-validator'
 
 import { createRequire } from 'module';
-import { get } from 'http';
 const require = createRequire(import.meta.url);
 require('dotenv').config();
 
-
 const app = express()
+app.use(cors())
 app.use(express.json())
+swagger(app)
 
 const port = process.env.PORT
 
-app.get('/', (req, res) => {
+app.get('/', cors(), (req, res) => {
   res.send('noice noice')
 })
 
-app.get('/posts', async (req,res)=> {
+app.get('/posts', cors(), async (req,res)=> {
   try {
     const posts = await getAllPosts()
     res.status(200).json(posts)
@@ -27,11 +28,7 @@ app.get('/posts', async (req,res)=> {
   }
 })
 
-app.listen(port, () => {
-  console.log(`Server listening at http://127.0.0.1:${port}`)
-})
-
-app.post('/posts/', [
+app.post('/posts/', cors(), [
   body('title').notEmpty().isString(),
   body('content').notEmpty().isString(),
   body('image_url').notEmpty().isURL(),
@@ -53,7 +50,7 @@ app.post('/posts/', [
   }
 })
 
-app.post('/login', [
+app.post('/login', cors(), [
   body('username').notEmpty().isString(),
   body('password').notEmpty().isString(),
 ], async (req, res) => {
@@ -71,4 +68,8 @@ app.post('/login', [
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })
   }
+})
+
+app.listen(port, () => {
+  console.log(`Server listening at http://127.0.0.1:${port}`)
 })
