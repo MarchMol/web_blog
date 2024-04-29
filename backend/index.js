@@ -73,7 +73,7 @@ app.post('/login/', [
       return res.json(posts)
     }
     else{
-      returnres.status(500).json({ error: 'Credenciales Incorrectas' })
+      return res.status(400).json({ error: 'Credenciales Incorrectas' })
     }
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })
