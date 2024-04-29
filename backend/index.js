@@ -1,7 +1,7 @@
 import express from 'express'
 import { getAllPosts, createPost, authUser } from './src/db.js';
 import cors from 'cors'
-
+import { generateToken } from './jwt.js';
 import { body, validationResult } from 'express-validator'
 
 import { createRequire } from 'module';
