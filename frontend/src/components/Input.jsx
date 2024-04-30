@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-
+import './Input.css'
 const Input = ({type, label, value, onChange}) => {
     return(
 

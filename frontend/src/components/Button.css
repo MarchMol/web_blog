@@ -1,0 +1,14 @@
+button{
+    background: rgb(153, 0, 255);
+    background: linear-gradient(180deg, rgb(106, 54, 141) 0%, rgba(85,51,108,1) 100%);
+    border: 0;
+    color: white;
+    padding: 2vh;
+    font-size: 2.5vh;
+    border-radius: 2vh;
+    box-shadow: 0px 0px 1vh 0px rgba(0, 0, 0, 0.164);
+}
+
+button:hover{
+    background: linear-gradient(180deg, rgb(139, 83, 177) 0%, rgba(85,51,108,1) 100%);
+}
