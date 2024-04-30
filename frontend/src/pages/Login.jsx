@@ -1,16 +1,18 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import {PropTypes} from 'prop-types'
 import {md5} from 'js-md5'
 import './Login.css'
 import Input from '../components/Input.jsx'
 import Button from '../components/Button.jsx'
+import Loading from '../components/Loading.jsx'
 
 
-function Login ({setToken}) {
+function Login ({setToken, onSignal}) {
 const [formState, setFormState] = useState({username: '', password: ''})
- 
+const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
+        setLoading(true)
         const body = { }
         body.username = formState.username
         body.password = md5(formState.password)
@@ -27,7 +29,9 @@ const [formState, setFormState] = useState({username: '', password: ''})
         if (response.ok){
             console.log('success!')
             setToken(access_token)
+            onSignal(true)
         }
+        setLoading(false)
     }
 
 
@@ -40,8 +44,8 @@ const [formState, setFormState] = useState({username: '', password: ''})
 
 
     return (
-    <>
-    <div className="container">
+    <Loading isLoading={loading}>
+        <div className="container">
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
             <Input label='Username' type='text' value={formState.username}
@@ -50,8 +54,9 @@ const [formState, setFormState] = useState({username: '', password: ''})
             onChange={(value) => setValue('password',value)}/>
             <Button text="Login" onClick={handleSubmit}/>
         </form>
-    </div>
-    </>
+        </div>    
+    </Loading>
+    
 )}
 
 Login.propTypes = {

@@ -1,9 +1,11 @@
 .postsContainer{
     display: flex;
     flex-direction: column;
-    gap: 20vh;
+    gap: 10vh;
     height: auto;
     width: 80vw;
     max-height: calc(100vh - 100px);
     align-items: center;
+    padding-bottom: 10vh;
 }
+

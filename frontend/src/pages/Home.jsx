@@ -42,13 +42,16 @@ function Home() {
 
 
   return (
-        <div className='postsContainer'>
-          {loading ?
-            <Loading />: // inline conditional for loading state
-            posts.map((item, index) => ( // map iterator for all the posts recieved from the api
+        
+          <Loading isLoading={loading}>
+            <div className='postsContainer'>
+            {posts.map((item, index) => ( // map iterator for all the posts recieved from the api
             <Post jsonData={item} key={index}/>
             ))}
-        </div>
+            </div>
+          </Loading>
+        
+        
   )
 }
 

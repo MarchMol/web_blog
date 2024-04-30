@@ -1,5 +1,4 @@
 
-
 .container{
     background: linear-gradient(0deg, #412653, #3F576F);
     padding: 3rem;
@@ -8,34 +7,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 70vw;
 }
 
-.field{
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 1rem;
-    width: 40vw;
-    max-width: 25vw;
-}
 
-input{
-    background: rgba(0, 0, 0, 0.315);
-    color: #b9b9b9;
-    border: 0;
-    border-radius: 1vw;
-    padding: 2dvh;
-}
-
-button{
-    border: 0px;
-    padding: 1vh;
-    border-radius: 1vh;
-    background-color:white;
-    transition: color, 0.15s;
-    width: 10vw;
-    height: 5vh;
-}
 
 button:hover{
     background-color:rgb(215, 250, 255);
@@ -46,3 +20,9 @@ h1, label, p{
     padding-bottom: 1vh;
 }
 
+@media only screen and (max-width: 400px) {
+    .container{
+        min-width: 40vw;
+    }
+
+}
