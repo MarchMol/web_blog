@@ -1,0 +1,14 @@
+.loading {
+    animation: rotate 4s linear infinite;
+    max-height: 20vh;
+    transform: rotate(0deg);
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(359deg);
+    }
+}

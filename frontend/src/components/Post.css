@@ -1,0 +1,103 @@
+.postContainer{
+    background: linear-gradient(0deg, #4126539f, #3f576fa8);
+    padding: 3rem;
+    border-radius: 2vh;
+    box-shadow: 0px 0px 2vh 0px rgba(0, 0, 0, 0.164); /* Add shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 70vw;
+    max-height: 70vh;
+    color: white;
+}
+
+.topPost{
+    display: flex;
+    width: 100%;
+    padding: 2vh;
+}
+
+.hitbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 2vh;
+}
+.hitbox:hover{
+    cursor: pointer;
+}
+
+.hitbox img {
+    position: absolute;
+    max-width: 30vh;
+    max-height: 30vw;
+    transition: margin-left, 0.8s;
+}
+
+.cover{
+    box-shadow: 0px 0px 2vh 0px rgb(0, 0, 0);
+    z-index: 2;
+}
+.hitbox:hover .cover{
+    margin-left: -10vh;
+    
+}
+
+.hitbox:hover .vinyl{
+    margin-left: 10vh;
+}
+
+.info{
+    padding: 2vh;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.info ul{
+    display: flex;
+    margin-left: -5vh;
+    flex-direction: column;
+    gap: 1vh;
+    list-style-type: none;
+}
+
+
+.info a{
+    background-color: black;
+}
+
+.midPost{
+    padding: 2vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.midPost p{
+    max-width: 70%;
+}
+
+.circle{
+    height: 15vh;
+    width: 15vh;
+    min-width: 15vh;
+    border-radius: 100%;
+    border: solid 0.1vh rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottomPost{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.bottomPost p {
+    color:rgb(133, 133, 133) ;
+}
