@@ -1,0 +1,9 @@
+.postsContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 20vh;
+    height: auto;
+    width: 80vw;
+    max-height: calc(100vh - 100px);
+    align-items: center;
+}
