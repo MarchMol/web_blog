@@ -27,7 +27,7 @@ export async function authUser(username, password) {
         const result = await conn.query(`SELECT * FROM auth_credentials('${username}','${password}')`)
 
         console.log(result.rows[0]);
-        return result.rowCount
+        return result.rows[0]
     } catch (error) {
         console.error('Error autenticando usuario', error);
 
@@ -47,7 +47,7 @@ export async function createPost(song_name, album, artist, music, cover_art, con
             `INSERT INTO music_blog(name, album, artist, music, cover_art, content, rank, album_date, post_date) 
              VALUES ('${song_name}','${album}','${artist}','${music}','${cover_art}','${content}',${rank},'${album_date}', CURRENT_TIMESTAMP);`
         )
-        return result.rows[0]
+        return result.rowCount[0]
     } catch{
         console.error('Error creando post', error);
     } finally{
