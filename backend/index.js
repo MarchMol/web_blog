@@ -87,7 +87,7 @@ app.post('/create/', [
   } = req.body
 
   try {
-    const token = req.allowedHeaders.authorization
+    var token = req.headers['Authorization'].split(' ')[1];
     if(validateToken(token)){
       const posts = await createPost(name, album,artist, music, cover_art, content, rank, album_date)
       res.status(200)
