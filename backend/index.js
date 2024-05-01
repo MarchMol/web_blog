@@ -89,12 +89,14 @@ app.post('/create/', [
   try {
     const authHeader = req.headers.authorization;
     const token = authHeader.split(' ')[1]
-    // if(validateToken(token)){
+    if(validateToken(token)){
       const posts = await createPost(name, album, artist, music, cover_art, content, rank, album_date)
       res.status(200)
       res.json({ error: token})
       return 
- 
+    } else{
+      return res.status(400).json({error: "Invalid or Expired Token"})
+    }
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error creando los posts' })
   }
