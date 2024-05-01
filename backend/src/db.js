@@ -45,7 +45,7 @@ export async function createPost(){
         client = await conn.connect(song_name, album, artist, music, cover_art, content, rank, album_date);
         const result = await conn.addListener.query(
             `INSERT INTO music_blog(name, album, artist, music, cover_art, content, rank, album_date, post_date) 
-             VALUES (${song_name},${album},${artist},${music},${cover_art},${content},${rank},${album_date}, CURRENT_TIMESTAMP);`
+             VALUES ('${song_name}','${album}','${artist}','${music}','${cover_art}','${content}',${rank},'${album_date}', CURRENT_TIMESTAMP);`
         )
         return result.rows[0]
     } catch{
