@@ -87,16 +87,16 @@ app.post('/create/', [
   } = req.body
 
   try {
-    var token = req.allowedHeaders['Authorization'].split(' ')[1];
-    if(validateToken(token)){
+    // var token = req.allowedHeaders['Authorization'].split(' ')[1];
+    // if(validateToken(token)){
       const posts = await createPost(name, album, artist, music, cover_art, content, rank, album_date)
       res.status(200)
-      res.json(posts)
+      res.json(req.allowedHeaders)
       return 
-    }else{
-      res.status(401).json({ error: "Token Inválido"})
-      return 
-    }
+    // }else{
+    //   res.status(401).json({ error: "Token Inválido"})
+    //   return 
+    // }
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error creando los posts' })
   }
