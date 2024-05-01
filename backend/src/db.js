@@ -39,10 +39,10 @@ export async function authUser(username, password) {
 }
 
 // Create, auth
-export async function createPost(){
+export async function createPost(song_name, album, artist, music, cover_art, content, rank, album_date){
     let client;
     try{
-        client = await conn.connect(song_name, album, artist, music, cover_art, content, rank, album_date);
+        client = await conn.connect();
         const result = await conn.addListener.query(
             `INSERT INTO music_blog(name, album, artist, music, cover_art, content, rank, album_date, post_date) 
              VALUES ('${song_name}','${album}','${artist}','${music}','${cover_art}','${content}',${rank},'${album_date}', CURRENT_TIMESTAMP);`
