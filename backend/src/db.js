@@ -27,7 +27,7 @@ export async function authUser(username, password) {
         const result = await conn.query(`SELECT * FROM auth_credentials('${username}','${password}')`)
 
         console.log(result.rows[0]);
-        return result.rows[0]
+        return result.rowCount
     } catch (error) {
         console.error('Error autenticando usuario', error);
 
