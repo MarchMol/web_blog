@@ -68,8 +68,7 @@ app.post('/login/', [
 })
 
 
-//
-app.post('/create/',[
+app.post('/create/', [
   body('name').notEmpty().isString(),
   body('album').notEmpty().isString(),
   body('artist').notEmpty().isString(),
@@ -78,7 +77,7 @@ app.post('/create/',[
   body('content').notEmpty().isString(),
   body('rank').notEmpty().isNumeric(),
   body('album_date').notEmpty().isDate(),
-],async (req, res) => {
+], async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: 'Formato incorrecto' })
@@ -88,21 +87,18 @@ app.post('/create/',[
   } = req.body
 
   try {
-
-      const token = req.headers.authorization
-      if(validateToken(token)){
-        const posts = await createPost(name, album,artist, music, cover_art, content, rank, album_date)
-        res.status(200)
-        res.json(posts)
-        return 
-      }
-      else{
-        res.status(401).json({ error: "Invalid Token" })
-        return 
-      }
-    
+    const token = req.allowedHeaders.authorization
+    if(validateToken(token)){
+      const posts = await createPost(name, album,artist, music, cover_art, content, rank, album_date)
+      res.status(200)
+      res.json(posts)
+      return 
+    }else{
+      res.status(401).json({ "success": false })
+      return 
+    }
   } catch (error) {
-    return res.status(500).json({ error: 'Ocurrio un error ingresando los posts' })
+    return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })
   }
 })
 
