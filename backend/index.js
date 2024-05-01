@@ -76,7 +76,7 @@ app.post('/create/', [
   body('cover_art').notEmpty().isURL(),
   body('content').notEmpty().isString(),
   body('rank').notEmpty().isNumeric(),
-  body('album_date').notEmpty().isDate(),
+  body('album_date').notEmpty().isString(),
 ], async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -98,7 +98,7 @@ app.post('/create/', [
     //   return 
     // }
   } catch (error) {
-    return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })
+    return res.status(500).json({ error: 'Ocurrio un error creando los posts' })
   }
 })
 
