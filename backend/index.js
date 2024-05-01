@@ -87,16 +87,16 @@ app.post('/create/', [
   } = req.body
 
   try {
-    var token = req.headers['Authorization'].split(' ')[1];
-    if(validateToken(token)){
+    // var token = req.headers['Authorization'].split(' ')[1];
+    // if(validateToken(token)){
       const posts = await createPost(name, album,artist, music, cover_art, content, rank, album_date)
       res.status(200)
       res.json(posts)
       return 
-    }else{
-      res.status(401).json({ "success": false })
-      return 
-    }
+    // }else{
+    //   res.status(401).json({ "success": false })
+    //   return 
+    // }
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error alterando los posts' })
   }

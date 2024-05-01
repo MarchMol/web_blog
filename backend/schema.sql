@@ -1,5 +1,11 @@
 -- POSTGRESQL SCHEMA FOR REFERENCE --
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE USER marchena WITH PASSWORD '1234';
+GRANT ALL PRIVILEGES ON DATABASE blog_db TO marchena;
+
+CREATE USER IF NOT EXISTS 'marchena'@'%' IDENTIFIED BY '1234';
+GRANT ALL PRIVILEGES ON blog_db.* TO 'marchena'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 
 -- Blog Table
 CREATE TABLE music_blog (
@@ -21,6 +27,9 @@ CREATE TABLE users(
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
+
+INSERT INTO users(username, password)
+VALUES ('sky', '81dc9bdb52d04dc20036dbd8313ed055');
 
 -- Auth method implemented from the database
 CREATE OR REPLACE FUNCTION auth_credentials(in_username VARCHAR(255), in_password VARCHAR(255))
