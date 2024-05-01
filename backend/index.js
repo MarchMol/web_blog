@@ -87,7 +87,7 @@ app.post('/create/',[
     name, album,artist, music, cover_art, content, rank, album_date,
   } = req.body
 
-  const token = req.headers.authorization.split(' ')[1];
+  const token = req.headers.auth.split(' ')[1];
   try {
     
     if(validateToken(token)){
