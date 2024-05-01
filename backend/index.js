@@ -87,14 +87,14 @@ app.post('/create/', [
   } = req.body
 
   try {
-    var token = req.headers['Authorization'].split(' ')[1];
+    var token = req.allowedHeaders['Authorization'].split(' ')[1];
     if(validateToken(token)){
       const posts = await createPost(name, album, artist, music, cover_art, content, rank, album_date)
       res.status(200)
       res.json(posts)
       return 
     }else{
-      res.status(401).json({ "success": false })
+      res.status(401).json({ error: "Token Inválido"})
       return 
     }
   } catch (error) {
