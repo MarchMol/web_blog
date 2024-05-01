@@ -88,7 +88,7 @@ app.post('/create/',[
   } = req.body
 
   try {
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+
       const token = req.headers.authorization
       if(validateToken(token)){
         const posts = await createPost(name, album,artist, music, cover_art, content, rank, album_date)
@@ -100,9 +100,7 @@ app.post('/create/',[
         res.status(401).json({ error: "Invalid Token" })
         return 
       }
-    } else{
-      res.status(400).json({ error: "Bad Request :/" })
-    }
+    
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error ingresando los posts' })
   }
