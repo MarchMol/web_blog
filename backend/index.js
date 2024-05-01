@@ -1,7 +1,7 @@
 import express from 'express'
 import { getAllPosts, authUser } from './src/db.js';
 import cors from 'cors'
-import { generateToken, validateToken } from './jwt.js';
+import { generateToken, validateToken, createPost } from './jwt.js';
 import { body, validationResult } from 'express-validator'
 
 import { createRequire } from 'module';
@@ -12,7 +12,7 @@ const app = express()
 const corsOptions = {
   origin: '*',
   methods: ['GET', 'POST'], 
-  allowedHeaders: ['Content-Type', 'auth'], 
+  allowedHeaders: ['Content-Type', 'Authorization'], 
 };
 app.use(cors(corsOptions));
 app.use(express.json())
@@ -87,18 +87,21 @@ app.post('/create/',[
     name, album,artist, music, cover_art, content, rank, album_date,
   } = req.body
 
-  const token = req.headers.auth.split(' ')[1];
   try {
-    
-    if(validateToken(token)){
-      const posts = await authUser(name, album,artist, music, cover_art, content, rank, album_date)
-      res.status(200)
-      res.json({"success": true, access_token: token})
-      return 
-    }
-    else{
-      res.status(401).json({ "success": false })
-      return 
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+      const token = req.headers.authorization
+      if(validateToken(token)){
+        const posts = await createPost(name, album,artist, music, cover_art, content, rank, album_date)
+        res.status(200)
+        res.json(posts)
+        return 
+      }
+      else{
+        res.status(401).json({ error: "Invalid Token" })
+        return 
+      }
+    } else{
+      res.status(400).json({ error: "Bad Request :/" })
     }
   } catch (error) {
     return res.status(500).json({ error: 'Ocurrio un error ingresando los posts' })
