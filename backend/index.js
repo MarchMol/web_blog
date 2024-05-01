@@ -88,10 +88,11 @@ app.post('/create/', [
 
   try {
     const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1]
     // if(validateToken(token)){
       const posts = await createPost(name, album, artist, music, cover_art, content, rank, album_date)
       res.status(200)
-      res.json({ error: authHeader})
+      res.json({ error: token})
       return 
  
   } catch (error) {
