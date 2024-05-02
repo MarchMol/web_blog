@@ -17,7 +17,6 @@ const Loading = ({ isLoading, children }) => {
             <>
             {children}
             </>
-            
           )
           }
     </center>

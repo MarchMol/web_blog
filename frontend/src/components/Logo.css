@@ -6,14 +6,16 @@
     font-style: normal;
 }
 
-.logo{
 
+.logo{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 20vh;
     width: 20vh;
     min-height: 20vh;
+    margin-left: 2vw;
+    margin-top: 2vh;
 }
 
 .logo p {
