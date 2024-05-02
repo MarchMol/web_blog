@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import Login from './pages/Login.jsx'
 import Home from './pages/Home.jsx'
@@ -31,22 +31,32 @@ const routes = {
 
 const Router = ({token, setToken}) => {
     const [page, setPage] = useState('/home')
-    const [login, setLogin] = useState(false)
     
+    useEffect(() => {
+        if (token){
+            document.body.style.background = 'rgb(105,229,215)';
+            document.body.style.background = 'linear-gradient(140deg, rgba(105,229,215,1) 0%, rgba(89,164,125,1) 50%, rgba(63,70,111,1) 100%)';
+            document.body.style.backgroundAttachment = 'fixed';
+        } else{
+            document.body.style.background = 'rgb(229,123,105)';
+            document.body.style.background = 'linear-gradient(140deg, rgba(229,123,105,1) 0%, rgba(164,89,164,1) 50%, rgba(63,87,111,1) 100%)';
+            document.body.style.backgroundAttachment = 'fixed';
+        }
+    }, [token])
+
+
     const confirmLogOut = () =>{
         var logoutConfirmed = confirm("Are you sure you want to log out?");
         if(logoutConfirmed){
-            setToken(null)
+            setToken('')
             setPage('/home')
         }
-
     }
 
-
-    const handleLogin = (data) => {
-        if(data){
+    const handleLogin = (signal) => {
+        if(signal){
             setPage('/home')
-        } // Update state or perform any action based on the signal
+        }
     };
 
     let CurrentPage = () => <h1>404</h1>
@@ -69,12 +79,12 @@ const Router = ({token, setToken}) => {
             {token && (
                 <>
                 <li className='navLi' id={page==='/post' ? 'selected' : 'unselected' }>
-                <a href='#/post' onClick = {() =>
-                setPage('/post')}>Post</a>
+                <a href='#/admin/post' onClick = {() =>
+                setPage('/post')}>Post Manager</a>
                 </li>
 
                 <li className='navLi' id={page==='/logout' ? 'selected' : 'unselected' }>
-                <a href='#/logout' onClick = {() =>
+                <a href='#/admin/logout' onClick = {() =>
                 confirmLogOut()}>Log Out</a>
                 </li>
                 </>

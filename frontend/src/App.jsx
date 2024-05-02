@@ -9,9 +9,7 @@ function App() {
     )
     
     useEffect(() => {
-        if (token){
-            localStorage.setItem('access_token', token)
-        }
+        localStorage.setItem('access_token', token)
     }, [token])
     return (
         <div>
