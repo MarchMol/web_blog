@@ -57,31 +57,50 @@ export async function createPost(song_name, album, artist, music, cover_art, con
     }
 }
 
-// // Update, auth
-// export async function updatePost(){
-//     let client;
-//     try{
+// Update, auth
+export async function updatePost(id, song_name, album, artist, music, cover_art, content, rank, album_date){
+    let client;
+    try{
+        client = await conn.connect();
+        const result = await conn.query(
+            `UPDATE music_blog
+            SET 
+                name = '${song_name}',
+                album = '${album}',
+                artist = '${artist}',
+                music = '${music}',
+                cover_art = '${cover_art}',
+                content = '${content}',
+                rank = ${rank},
+                album_date = '${album_date}',
+                post_date = CURRENT_TIMESTAMP
+            WHERE 
+                id = ${id};`)
+        return result.rowCount[0]
+    } catch{
+        console.error('Error creando post', error);
+    } finally{
+        if(client){
+            client.release();
+        }
+    }
+}
 
-//     } catch{
 
-//     } finally{
-//         if(client){
-//             client.release();
-//         }
-//     }
-// }
-
-
-// // Delete, auth
-// export async function deletePost(){
-//     let client;
-//     try{
-
-//     } catch{
-
-//     } finally{
-//         if(client){
-//             client.release();
-//         }
-//     }
-// }
+// Delete, auth
+export async function deletePost(id){
+    let client;
+    try{
+        client = await conn.connect();
+        const result = await conn.query(
+            `DELETE FROM music_blog WHERE id=${id}`
+        )
+        return result.rowCount[0]
+    } catch{
+        console.error('Error eliminando post', error);
+    } finally{
+        if(client){
+            client.release();
+        }
+    }
+}
