@@ -5,7 +5,7 @@ export async function getAllPosts() {
     let client;
     try {
         client = await conn.connect();
-        const result = await client.query('SELECT * FROM music_blog');
+        const result = await client.query('SELECT * FROM music_blog ORDER BY id');
 
         console.log(result.rows);
         return result.rows
