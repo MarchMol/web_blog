@@ -139,7 +139,7 @@ app.post('/update/', [
 })
 
 // Delete endpoint, auth
-app.post('/delete/', [
+app.delete('/delete/', [
   body('id').notEmpty(),
 ], async (req, res) => {
   const errors = validationResult(req)
