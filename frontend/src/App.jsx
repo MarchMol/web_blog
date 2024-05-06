@@ -1,20 +1,19 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Router from "./Router";
-
+import { TokenProvider } from "./hooks/UseToken";
+import { RouterProvider } from "./hooks/useRouter";
 
 
 function App() {
-    const [ token, setToken] = useState(
-        localStorage.getItem('access_token') || null
-    )
-    
-    useEffect(() => {
-        localStorage.setItem('access_token', token)
-    }, [token])
+
     return (
-        <div>
-            <Router token={token} setToken={setToken} />
-        </div> 
+        <TokenProvider>
+            <RouterProvider>
+                <div>
+                    <Router />
+                </div>
+            </RouterProvider>
+        </TokenProvider>
     )
 }
 
