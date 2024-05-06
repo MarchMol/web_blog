@@ -2,7 +2,7 @@ import express from 'express'
 import { getAllPosts, authUser, createPost, updatePost, deletePost } from './src/db.js';
 import cors from 'cors'
 import { generateToken, validateToken } from './jwt.js';
-import { body, header, validationResult } from 'express-validator'
+import { body, header, param, validationResult } from 'express-validator'
 
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
