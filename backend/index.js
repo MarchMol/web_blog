@@ -2,7 +2,7 @@ import express from 'express'
 import { getAllPosts, authUser, createPost, updatePost, deletePost } from './src/db.js';
 import cors from 'cors'
 import { generateToken, validateToken } from './jwt.js';
-import { body, validationResult } from 'express-validator'
+import { body, header, validationResult } from 'express-validator'
 
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -139,16 +139,14 @@ app.post('/update/', [
 })
 
 // Delete endpoint, auth
-app.delete('/delete/', [
-  body('id').notEmpty(),
+app.delete('/delete/:postId', [
+  param('postId').notEmpty().isNumeric(),
 ], async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: 'Formato incorrecto' })
   }
-  const {
-    id,
-  } = req.body
+  const id = req.params.postId
 
   try {
     const authHeader = req.headers.authorization;
@@ -162,7 +160,7 @@ app.delete('/delete/', [
       return res.status(400).json({error: "Invalid or Expired Token"})
     }
   } catch (error) {
-    return res.status(500).json({ error: 'Ocurrio un error updating los posts' })
+    return res.status(500).json({ error: 'Ocurrio un error eliminando los posts' })
   }
 })
 
