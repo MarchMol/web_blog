@@ -139,15 +139,8 @@ app.post('/update/', [
 })
 
 // Delete endpoint, auth
-app.delete('/delete/:postId', [
-  param('postId').notEmpty(),
-], async (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: 'Formato incorrecto' })
-  }
+app.delete('/delete/:postId', async (req, res) => {
   const id = req.params.postId
-
   try {
     const authHeader = req.headers.authorization;
     const token = authHeader.split(' ')[1]
