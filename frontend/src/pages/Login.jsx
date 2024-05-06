@@ -5,11 +5,13 @@ import './Login.css'
 import Input from '../components/Input.jsx'
 import Button from '../components/Button.jsx'
 import Loading from '../components/Loading.jsx'
+import UseToken from '../hooks/UseToken.jsx'
 
 
-function Login ({setToken, onSignal}) {
+function Login ({ onSignal}) {
 const [formState, setFormState] = useState({username: '', password: ''})
 const [loading, setLoading] = useState(false);
+const { setToken } = UseToken();
 
     const handleSubmit = async () => {
         setLoading(true)
@@ -49,9 +51,9 @@ const [loading, setLoading] = useState(false);
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
             <Input label='Username' type='text' value={formState.username}
-            onChange={(value) => setValue('username',value)}/>
+            onChange={(value) => setValue('username',value)} size='normalInput'/>
             <Input label='Password' type='password' value={formState.password}
-            onChange={(value) => setValue('password',value)}/>
+            onChange={(value) => setValue('password',value)} size='normalInput'/>
             <Button text="Login" onClick={handleSubmit}/>
         </form>
         </div>    
@@ -59,8 +61,6 @@ const [loading, setLoading] = useState(false);
     
 )}
 
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired,
-}
+
 
 export default Login

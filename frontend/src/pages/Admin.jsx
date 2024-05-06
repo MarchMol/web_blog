@@ -4,6 +4,7 @@ import '../components/Post.css'
 import Icon from "../components/Icon";
 import PostForm from "../components/PostForm";
 import './Admin.css'
+import UseApi from "../hooks/UseApi";
 
 
 const routes = {
@@ -37,6 +38,9 @@ function Admin() {
   const [page, setPage] = useState('/manager')
   const [isHub, setHub] = useState(true);
 
+  const handleDelete = () => {
+    confirm('Are you sure you want to delete this post?')
+  }
   let CurrentPage = () => <h1>404</h1>
 
     if (localStorage.getItem('access_token')){
@@ -45,6 +49,7 @@ function Admin() {
 
   useEffect(() => {
     const getPosts = async () => {
+      setLoading(true);
       try {
         const response = await fetch('https://web-blog-inky.vercel.app/posts')
         const jsonPosts = await response.json();
@@ -61,7 +66,7 @@ function Admin() {
     };
 
     getPosts();
-  }, []);
+  }, [isHub]);
 
   return (
     <Loading isLoading={loading}>
@@ -74,7 +79,7 @@ function Admin() {
                 <h2>ID</h2>
                 <h2>Song</h2>
                 <h2>Actions</h2>
-                <div />
+                <div/>
               </div>
               {posts.map((item, index) => ( // map iterator for all the posts recieved from the api
                 <div className="row" key={index}>
@@ -90,9 +95,8 @@ function Admin() {
                       enabled={true} />
                     <Icon type="deleteIcon"
                       onClick={() => {
-                        setPage('/delete')
-                        setHub(false)
                         setSelected(item.id)
+                        handleDelete()
                       }}
                       enabled={true} />
                   </div>
@@ -100,20 +104,23 @@ function Admin() {
               ))}
 
               <div className="bottomTable">
-                <Icon type="addIcon" enabled={true} />
+                <Icon type="addIcon" enabled={true} 
+                onClick={() => {
+                  setPage('/create')
+                  setHub(false)
+                  setSelected(1)
+                }}
+                />
               </div>
             </div>
 
           ) :
             (
-              <CurrentPage type={selected}/>
+              <CurrentPage id={selected} currentInfo={posts[selected-1]} type={routes[page].type} setHub={setHub} setLoading={setLoading}/>
             )
       )
     }
-
-
     </Loading>
-    
   )
 }
 

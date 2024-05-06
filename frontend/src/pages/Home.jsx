@@ -3,17 +3,6 @@ import Post from '../components/Post.jsx'
 import Loading from '../components/Loading.jsx';
 import './Home.css'
 
-const temData = {
-id: 1,
-name: 'Dummy',
-album: 'Chris Black Changed My Life',
-artist: 'Portugal. The Man',
-music: 'https://www.youtube.com/watch?v=8xT0vWporWs',
-cover_art: 'https://i.scdn.co/image/ab67616d0000b273a9c3cd9374b929b927e982c2',
-content: '"Dummy" de Portugal The Man es una canción envolvente que combina ritmos vibrantes con letras introspectivas y trágicas.',
-rank: 4.8,
-release_date: '2023-06-12'
-}
 
 function Home() {
     const [posts, setPosts] = useState([]);
