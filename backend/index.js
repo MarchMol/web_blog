@@ -140,7 +140,7 @@ app.post('/update/', [
 
 // Delete endpoint, auth
 app.delete('/delete/:postId', [
-  param('postId').notEmpty().isNumeric(),
+  param('postId').notEmpty(),
 ], async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
