@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import './Input.css'
-const Input = ({type, label, value, onChange,size}) => {
+const Input = ({type, label, value, onChange, size, max}) => {
     return(
 
     <div className="field">
@@ -10,7 +10,8 @@ const Input = ({type, label, value, onChange,size}) => {
         className={size}
         onChange={({target: {value}}) => onChange(value)} 
         value={value} 
-        type={type}/>
+        type={type}
+        maxLength={max}/>
         ):
          <textarea 
          onChange={({target: {value}}) => onChange(value)}

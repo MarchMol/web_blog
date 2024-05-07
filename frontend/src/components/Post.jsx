@@ -32,7 +32,7 @@ const Post = ({ jsonData }) => {
                 <p>{jsonData.content}</p>
                 <div className='space'></div>
                 <div class="circle">
-                    <h2>{jsonData.rank}</h2>
+                    <h1>{jsonData.rank}</h1>
                 </div>
             </div>
             <div className='bottomPost'>
