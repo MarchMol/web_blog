@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext, createContext } from "react"
 
-const TokenContext = createContext({token: '', UseToken: () => {}, isLoggedIn: false})
+const TokenContext = createContext({token: '', UseToken: () => {}, isLoggedIn: false, isTokenExpired: ()=>{}})
 
 const TokenProvider = ({children}) => {
+    
     const [token, setToken] = useState(
         localStorage.getItem('access_token') || null
     )
@@ -11,18 +12,22 @@ const TokenProvider = ({children}) => {
     }, [token])
     const isLoggedIn = !!token
 
+    const isTokenExpired = (token) => {
+        const decodedToken = jwt_decode(token);
+        const currentTime = Math.floor(Date.now() / 1000);
+        return decodedToken.exp < currentTime;
+    };
     
     return(
-        <TokenContext.Provider value={{token, setToken, isLoggedIn}}>
+        <TokenContext.Provider value={{token, setToken, isLoggedIn, isTokenExpired}}>
             {children}
         </TokenContext.Provider>
     )
 }
 
 const UseToken = () => {
-    const {token, setToken, isLoggedIn} = useContext(TokenContext)
-    
-    return {token, setToken, isLoggedIn}
+
+    return useContext(TokenContext)
 }
 
 export default UseToken

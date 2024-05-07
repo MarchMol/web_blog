@@ -1,6 +1,7 @@
 import useRouter from "@hooks/useRouter"
 import UseToken from "@hooks/UseToken"
 import Logo from "@components/Logo"
+import './NavBar.css'
 
 const NavBar = () => {
     const { page, navigate } = useRouter()

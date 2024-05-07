@@ -10,42 +10,11 @@ body{
     overflow-y: scroll;
 }
 
-
 #root{
     display: flex;
     align-items: center;
 }
 
-.nav {
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    width: 100vw;
-}
-.navUl{
-    display: flex;
-    gap: 5vw;
-    list-style-type: none;
-    align-items: center;
-    padding-right: 10vw;
-}
-
-.navLi{
-    padding: 1vw;
-}
-
-
-.navLi:hover{
-    background-color: rgba(255, 255, 255, 0.178);
-    border-radius: 2vh;
-}
-
-.nav a{
-    color:rgb(207, 207, 207);
-    text-decoration: none;
-}
 .page{
     display: flex;
     align-items: start;
@@ -54,7 +23,4 @@ body{
     padding-top: 5vh;
 }
 
-#selected{
-    font-weight: bold;
-    font-size: 3vh;
-}
+
