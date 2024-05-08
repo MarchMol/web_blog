@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, createContext } from "react"
+import { jwtDecode } from "jwt-decode"
 
-const TokenContext = createContext({token: '', UseToken: () => {}, isLoggedIn: false, isTokenExpired: ()=>{}})
+const TokenContext = createContext({UseToken: () => {}, checkLogin: ()=>{}})
 
 const TokenProvider = ({children}) => {
     
@@ -10,16 +11,31 @@ const TokenProvider = ({children}) => {
     useEffect(() => {
         localStorage.setItem('access_token', token)
     }, [token])
-    const isLoggedIn = !!token
 
-    const isTokenExpired = (token) => {
-        const decodedToken = jwt_decode(token);
-        const currentTime = Math.floor(Date.now() / 1000);
-        return decodedToken.exp < currentTime;
-    };
     
+    const checkLogin = () => {
+        try{
+            const decodedToken = jwtDecode(token.toString());
+            const currentTime = Date.now() / 1000;
+            if(decodedToken.exp > currentTime){
+                console.log('Valid token')
+                console.log(decodedToken.exp)
+                return true
+            } else{
+                    console.log('Expired token')
+                return 'expired'
+            }
+        } catch{
+            console.log('NUll token')
+            return false
+            
+        }
+
+    }
+
+
     return(
-        <TokenContext.Provider value={{token, setToken, isLoggedIn, isTokenExpired}}>
+        <TokenContext.Provider value={{token, setToken, checkLogin}}>
             {children}
         </TokenContext.Provider>
     )

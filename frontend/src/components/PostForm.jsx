@@ -23,7 +23,7 @@ let postSchema = object({
 });
 
 function PostForm() {
-    const { token } = UseToken();
+    const { checkLogin, token } = UseToken();
     const { values, setValue, validate, errors } = useForm(postSchema)
     const [url, setUrl] = useState('')
     const [isOk, setOk] = useState(true)
@@ -89,7 +89,6 @@ function PostForm() {
             body.cover_art = values.cover_art
             body.album_date = values.album_date
             body.content = values.content
-
             const rslt = await fetchData('post', url, body, token)
             if (rslt) {
                 setIsChoice(false)

@@ -7,8 +7,8 @@ import { useEffect } from "react"
 
 const NavBar = () => {
     const { page, navigate } = useRouter()
-    const { setToken, isLoggedIn} = UseToken()
-    const { setIsModalOpen, setMsg, setIsChoice, logout,setLogout, exit,setExit} = useMsg()
+    const { setToken, token, checkLogin} = UseToken()
+    const { setIsModalOpen, setMsg, setIsChoice, logout,setLogout, exit,setExit, expire, setExpire} = useMsg()
 
     const confirmLogOut = () =>{
         setIsChoice(true)
@@ -16,6 +16,25 @@ const NavBar = () => {
         setIsModalOpen(true)
         setLogout(true)
     }
+
+    useEffect(()=> {
+        if(checkLogin()==='expired'){
+            setIsChoice(false)
+            setMsg('Session expired')
+            setIsModalOpen(true)
+            navigate('/home')
+            setToken(null)
+        }
+    },[])
+    useEffect(()=>{
+        if(checkLogin()==='expired' ){
+            setIsChoice(false)
+            setMsg('Session expired')
+            setIsModalOpen(true)
+            setToken(null)
+            navigate('/home')
+        }
+    },[checkLogin()])
 
     useEffect(() => {
         if(logout){
@@ -38,14 +57,20 @@ const NavBar = () => {
             <Logo />
         <ul className='navUl'>
             <li className='navLi' id={page==='/home' ? 'selected' : 'unselected' }>
-                <a href='#/home' onClick = {() =>
-                navigate('/home')}>Home</a>
+                <a href='#/home' onClick = {() =>{
+                    navigate('/home')
+                    checkLogin()
+                }
+                }>Home</a>
             </li>
-            {isLoggedIn && (
+            {(checkLogin()) &&(
                 <>
                 <li className='navLi' id={page==='/admin' ? 'selected' : 'unselected' }>
                 <a href='#/admin' onClick = {() =>
-                navigate('/admin')}>Post Manager</a>
+                {
+                    navigate('/admin')
+                    checkLogin()
+                    }}>Post Manager</a>
                 </li>
 
                 <li className='navLi' id={page==='/logout' ? 'selected' : 'unselected' }>
@@ -55,7 +80,7 @@ const NavBar = () => {
                 </>
             )}
 
-            {!isLoggedIn &&(
+            {(!checkLogin()) &&(
             <li className='navLi' id={page==='/login' ? 'selected' : 'unselected' }>
             <a href="#/login" onClick = {() =>
             navigate('/login')}>Login</a>

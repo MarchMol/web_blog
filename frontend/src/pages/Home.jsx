@@ -9,7 +9,7 @@ import Message from '@components/Message';
 function Home() {
   const [posts, setPosts] = useState([]);
   const { loading, fetchData, error } = useApi()
-  const { setIsActive, setMsg, setIsChoice } = useMsg()
+  const { setIsModalOpen, setMsg, setIsChoice } = useMsg()
 
   useEffect(() => {
     const getPosts = async () => {

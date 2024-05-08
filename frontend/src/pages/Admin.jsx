@@ -22,7 +22,7 @@ const routes = {
 
 function Admin() {
   const [posts, setPosts] = useState([]);
-  const { token, isLoggedIn } = UseToken();
+  const {  token } = UseToken();
   const { loading, fetchData } = useApi()
   const { navigate, setAlterPost} = useRouter()
   const { setIsModalOpen, setMsg, setIsChoice ,exit, setExit, selected, setSelected} = useMsg()

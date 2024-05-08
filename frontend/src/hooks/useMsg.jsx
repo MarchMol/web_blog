@@ -9,11 +9,12 @@ const MsgProvider = ({children}) =>{
     const [msg, setMsg] = useState('')
     const [isChoice, setIsChoice] = useState(false)
     const [exit, setExit] = useState(0)
+    const [expire, setExpire] = useState(false)
     const [logout, setLogout] = useState(false)
     const [ selected, setSelected ] = useState(0)
 
     return(
-        <MsgContext.Provider value={{isModalOpen, setIsModalOpen, msg, setMsg, isChoice, setIsChoice, exit, setExit, logout, setLogout, selected, setSelected}}>
+        <MsgContext.Provider value={{isModalOpen, setIsModalOpen, msg, setMsg, isChoice, setIsChoice, exit, setExit, logout, setLogout, selected, setSelected, expire, setExpire}}>
             <Message>
                 {children}
             </Message>
