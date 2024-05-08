@@ -20,6 +20,9 @@ The vercel.json file created during the tutorial is already in the repository, a
 This project uses the port 5000 and the postgres url link provided by vercel both inside a .env file that's not in this repository. However, if you want to make it yourself it gas the following parameters:<br>
 - `PORT="5000"` <br>
 - `POSTGRES_URL="************"`<br>
+- `SECRET="************"`<br>
+The SECRET parameter is for the jwt, so i recommend to add it to the .env like I did so that it remains private. Also, you
+can add it to the enviroment variables inside of vercel.
 
 3.2. **Postgresql schema**<br>
 in this respository an unused file called schema.sql contains all the necessary queries for the construction of a database that's compatible with this project.
