@@ -1,6 +1,7 @@
 import pg from 'pg';
 
 import { createRequire } from 'module';
+import {process} from 'dotenv'
 const require = createRequire(import.meta.url);
 require('dotenv').config();
 

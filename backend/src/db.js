@@ -48,7 +48,7 @@ export async function createPost(song_name, album, artist, music, cover_art, con
              VALUES ('${song_name}','${album}','${artist}','${music}','${cover_art}','${content}',${rank},'${album_date}', CURRENT_TIMESTAMP);`
         )
         return result.rowCount[0]
-    } catch{
+    } catch (error){
         console.error('Error creando post', error);
     } finally{
         if(client){
@@ -77,7 +77,7 @@ export async function updatePost(id, song_name, album, artist, music, cover_art,
             WHERE 
                 id = ${id};`)
         return result.rowCount[0]
-    } catch{
+    } catch (error){
         console.error('Error creando post', error);
     } finally{
         if(client){
@@ -96,7 +96,7 @@ export async function deletePost(id){
             `DELETE FROM music_blog WHERE id=${id}`
         )
         return result.rowCount[0]
-    } catch{
+    } catch (error){
         console.error('Error eliminando post', error);
     } finally{
         if(client){
