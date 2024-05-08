@@ -1,41 +1,39 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 const options = {
-  'delete': {
+  delete: {
     method: 'DELETE',
     requireAuth: true,
-    requireBody: false,
+    requireBody: false
   },
-  'get': {
+  get: {
     method: 'GET',
     requireAuth: false,
-    requireBody: false,
+    requireBody: false
   },
-  'post': {
+  post: {
     method: 'POST',
     requireAuth: true,
-    requireBody: true,
+    requireBody: true
   },
-  'login': {
+  login: {
     method: 'POST',
     requireAuth: false,
-    requireBody: true,
-  },
+    requireBody: true
+  }
 }
 
-
-
 const useApi = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const getError = () => {
     return error
   }
 
   const fetchBuilder = (type, body, token) => {
-    var fetchOptions = {}
+    const fetchOptions = {}
     fetchOptions.method = options[type].method
     if (options[type].requireBody) {
       fetchOptions.body = JSON.stringify(body)
@@ -43,9 +41,8 @@ const useApi = () => {
     if (options[type].requireAuth) {
       fetchOptions.headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       }
-
     } else {
       fetchOptions.headers = {
         'Content-Type': 'application/json'
@@ -55,41 +52,41 @@ const useApi = () => {
   }
 
   const fetchData = async (type, url, body, token) => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const response = await fetch(url, fetchBuilder(type, body, token));
+      const response = await fetch(url, fetchBuilder(type, body, token))
       if (!response.ok) {
-        if(type==='login'){
-          const result = await response.json();
-          if(!result.success){
+        if (type === 'login') {
+          const result = await response.json()
+          if (!result.success) {
             setLoading(false)
             return false
-          } else{
-            throw new Error(response.status);
+          } else {
+            throw new Error(response.status)
           }
         }
-        throw new Error(response.status);
+        throw new Error(response.status)
       } else {
         if (type === 'delete' || type === 'post') {
           setLoading(false)
           setError(null)
           return true
         } else {
-          const result = await response.json();
-          setData(result);
-          setLoading(false);
+          const result = await response.json()
+          setData(result)
+          setLoading(false)
           setError(null)
           return result
         }
       }
     } catch (err) {
-      setError(err);
-      setLoading(false);
+      setError(err)
+      setLoading(false)
       return false
     }
-  };
+  }
 
-  return { data, loading, setLoading, error, fetchData, fetchBuilder, getError };
+  return { data, loading, setLoading, error, fetchData, fetchBuilder, getError }
 }
 
 export default useApi

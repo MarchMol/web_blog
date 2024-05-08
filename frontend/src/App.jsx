@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import Router from "./Router";
-import { TokenProvider } from "@hooks/UseToken";
-import { RouterProvider } from "@hooks/useRouter";
-import { MsgProvider } from "@hooks/useMsg";
+import Router from './Router'
+import { TokenProvider } from '@hooks/useToken'
+import { RouterProvider } from '@hooks/useRouter'
+import { MsgProvider } from '@hooks/useMsg'
+import React from 'react'
 
-function App() {
-
-    return (
+function App () {
+  return (
         <TokenProvider>
             <RouterProvider>
                 <MsgProvider>
@@ -16,7 +15,7 @@ function App() {
                 </MsgProvider>
             </RouterProvider>
         </TokenProvider>
-    )
+  )
 }
 
 export default App

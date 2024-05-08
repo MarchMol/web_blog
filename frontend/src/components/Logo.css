@@ -30,7 +30,7 @@
     height: 20vh;
     opacity: 50%;
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 60vh) {
     .logo{
         margin-left: 2vh;
         height: 15vh;

@@ -9,6 +9,18 @@ button{
     box-shadow: 0px 0px 1vh 0px rgba(0, 0, 0, 0.164);
 }
 
+button h3{
+    font-size: 1.5vh;
+    padding: 0;
+    margin: 0;
+}
+
 button:hover{
     background: linear-gradient(180deg, rgb(139, 83, 177) 0%, rgba(85,51,108,1) 100%);
+}
+
+@media only screen and (max-width: 70vh) {
+    button h3{
+        font-size: 3vw;
+    }
 }

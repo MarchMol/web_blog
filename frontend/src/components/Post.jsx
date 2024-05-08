@@ -1,17 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './Post.css'
-import vinylImage from '../assets/vinyl.png';
+import vinylImage from '../assets/vinyl.png'
 
 const Post = ({ jsonData }) => {
+  const date = new Date(jsonData.album_date)
+  const formated = date.toISOString().slice(0, 10)
+  const handleClick = () => {
+    window.open((jsonData.music), '_blank')
+  }
 
-    const date = new Date(jsonData.album_date);
-    const formated = date.toISOString().slice(0, 10);
-    const handleClick = () => {
-        window.open((jsonData.music), '_blank');
-    };
-    
-    return (
+  return (
         <div className='postContainer'>
             <div className='topPost'>
                 <div className='hitbox' onClick={handleClick}>
@@ -31,7 +30,7 @@ const Post = ({ jsonData }) => {
             <div className='midPost'>
                 <p>{jsonData.content}</p>
                 <div className='space'></div>
-                <div class="circle">
+                <div className="circle">
                     <h1>{jsonData.rank}</h1>
                 </div>
             </div>
@@ -39,11 +38,11 @@ const Post = ({ jsonData }) => {
                 <p>Published: {jsonData.post_date}</p>
             </div>
         </div>
-    )
+  )
 }
 
 Post.propTypes = {
-    jsonData: PropTypes.object.isRequired
+  jsonData: PropTypes.object.isRequired
 }
 
 export default Post

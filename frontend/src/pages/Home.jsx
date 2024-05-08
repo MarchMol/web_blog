@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react'
+import { React, useState, useEffect } from 'react'
 import Post from '@components/Post.jsx'
-import Loading from '@components/Loading.jsx';
+import Loading from '@components/Loading.jsx'
 import './Home.css'
-import useApi from '@hooks/useApi.jsx';
-import useMsg from '@hooks/useMsg';
-import Message from '@components/Message';
+import useApi from '@hooks/useApi.jsx'
+import useMsg from '@hooks/useMsg'
 
-function Home() {
-  const [posts, setPosts] = useState([]);
+function Home () {
+  const [posts, setPosts] = useState([])
   const { loading, fetchData, error } = useApi()
   const { setIsModalOpen, setMsg, setIsChoice } = useMsg()
 
@@ -27,10 +26,9 @@ function Home() {
         setMsg('There was an error fetching the posts')
         setIsChoice(false)
       }
-    };
-    getPosts();
-  }, []);
-
+    }
+    getPosts()
+  }, [])
 
   return (
     <Loading isLoading={loading}>
@@ -42,6 +40,5 @@ function Home() {
     </Loading>
   )
 }
-
 
 export default Home

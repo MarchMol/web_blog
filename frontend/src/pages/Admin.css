@@ -29,12 +29,13 @@
     background-color: black;
 }
 
-h2{
+.table h2{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: left;
-    font-size: 3vh;
+    font-size: 2.5vh;
+    width: fit-content;
 }
 
 .title{
@@ -55,4 +56,10 @@ h2{
     display: flex;
     justify-content: space-between;
     padding-left: 2vw;
+}
+
+@media only screen and (max-width: 50vh) {
+    .table h2{
+        font-size: 4vw;
+    }
 }

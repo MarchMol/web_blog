@@ -1,32 +1,19 @@
-import { useState, useEffect } from "react";
-import Loading from "@components/Loading"
+import { React, useState, useEffect } from 'react'
+import Loading from '@components/Loading'
 import '@components/Post.css'
-import Icon from "@components/Icon";
-import PostForm from "@components/PostForm";
+import Icon from '@components/Icon'
 import './Admin.css'
-import useApi from "@hooks/useApi";
-import UseToken from "@hooks/UseToken";
-import useMsg from "@hooks/useMsg";
-import useRouter from "@hooks/useRouter";
+import useApi from '@hooks/useApi'
+import useToken from '@hooks/useToken'
+import useMsg from '@hooks/useMsg'
+import useRouter from '@hooks/useRouter'
 
-const routes = {
-  '/update': {
-    component: PostForm,
-    type: 'update'
-  },
-  '/create': {
-    component: PostForm,
-    type: 'create'
-  },
-}
-
-function Admin() {
-  const [posts, setPosts] = useState([]);
-  const {  token } = UseToken();
+function Admin () {
+  const [posts, setPosts] = useState([])
+  const { token } = useToken()
   const { loading, fetchData } = useApi()
-  const { navigate, setAlterPost} = useRouter()
-  const { setIsModalOpen, setMsg, setIsChoice ,exit, setExit, selected, setSelected} = useMsg()
-
+  const { navigate, setAlterPost } = useRouter()
+  const { setIsModalOpen, setMsg, setIsChoice, exit, setExit, selected, setSelected } = useMsg()
 
   useEffect(() => {
     const getPosts = async () => {
@@ -38,21 +25,19 @@ function Admin() {
         setMsg('There was an error fetching the posts')
         setIsChoice(false)
       }
-
-    };
-    getPosts();
-  }, []);
+    }
+    getPosts()
+  }, [])
 
   useEffect(() => {
     const deleteMsg = async () => {
       if (exit === 1) {
         const rslt = await fetchData('delete', `https://web-blog-inky.vercel.app/delete/${selected}`, {}, token)
-        console.log('AAAAAAAAAA', rslt)
-        if(rslt){
+        if (rslt) {
           setExit(0)
           setIsChoice(false)
           setMsg('Deleted Successfully')
-        } else{
+        } else {
           setExit(0)
           setIsChoice(false)
           setMsg('Something went wrong')
@@ -62,12 +47,10 @@ function Admin() {
         setExit(0)
       }
     }
-    console.log(exit)
     deleteMsg()
-  }, [selected, exit]);
+  }, [selected, exit])
 
-
-  const handleDelete = async (id,song) => {
+  const handleDelete = async (id, song) => {
     setSelected(id)
     setIsChoice(true)
     setMsg(`Are you sure you want to delete the following post? ${id}: ${song}`)
