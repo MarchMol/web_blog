@@ -30,6 +30,10 @@ const useApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const getError = () => {
+    return error
+  }
+
   const fetchBuilder = (type, body, token) => {
     var fetchOptions = {}
     fetchOptions.method = options[type].method
@@ -47,7 +51,6 @@ const useApi = () => {
         'Content-Type': 'application/json'
       }
     }
-    console.log('FETCH OPTIONS', fetchOptions)
     return fetchOptions
   }
 
@@ -56,27 +59,37 @@ const useApi = () => {
     try {
       const response = await fetch(url, fetchBuilder(type, body, token));
       if (!response.ok) {
+        if(type==='login'){
+          const result = await response.json();
+          if(!result.success){
+            setLoading(false)
+            return false
+          } else{
+            throw new Error(response.status);
+          }
+        }
         throw new Error(response.status);
       } else {
         if (type === 'delete' || type === 'post') {
           setLoading(false)
+          setError(null)
           return true
         } else {
           const result = await response.json();
           setData(result);
           setLoading(false);
+          setError(null)
           return result
         }
       }
     } catch (err) {
       setError(err);
-      console.log(err)
       setLoading(false);
       return false
     }
   };
 
-  return { data, loading, setLoading, error, fetchData, fetchBuilder };
+  return { data, loading, setLoading, error, fetchData, fetchBuilder, getError };
 }
 
 export default useApi

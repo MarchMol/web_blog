@@ -2,18 +2,36 @@ import useRouter from "@hooks/useRouter"
 import UseToken from "@hooks/UseToken"
 import Logo from "@components/Logo"
 import './NavBar.css'
+import useMsg from "@hooks/useMsg"
+import { useEffect } from "react"
 
 const NavBar = () => {
     const { page, navigate } = useRouter()
     const { setToken, isLoggedIn} = UseToken()
+    const { setIsModalOpen, setMsg, setIsChoice, logout,setLogout, exit,setExit} = useMsg()
 
     const confirmLogOut = () =>{
-        var logoutConfirmed = confirm("Are you sure you want to log out?");
-        if(logoutConfirmed){
-            setToken(null)
-            navigate('/home')
-        }
+        setIsChoice(true)
+        setMsg('Are you sure you want to log out?')
+        setIsModalOpen(true)
+        setLogout(true)
     }
+
+    useEffect(() => {
+        if(logout){
+            if(exit===1){
+                setIsModalOpen(false)
+                setExit(0)
+                setToken(null)
+                navigate('/home')
+                setLogout(false)
+            } else if(exit===2){
+                setIsModalOpen(false)
+                setExit(0)
+            }
+        }
+      }, [exit]);
+
     
     return (
         <div className='nav'>
@@ -25,9 +43,9 @@ const NavBar = () => {
             </li>
             {isLoggedIn && (
                 <>
-                <li className='navLi' id={page==='/post' ? 'selected' : 'unselected' }>
-                <a href='#/admin/post' onClick = {() =>
-                navigate('/post')}>Post Manager</a>
+                <li className='navLi' id={page==='/admin' ? 'selected' : 'unselected' }>
+                <a href='#/admin' onClick = {() =>
+                navigate('/admin')}>Post Manager</a>
                 </li>
 
                 <li className='navLi' id={page==='/logout' ? 'selected' : 'unselected' }>

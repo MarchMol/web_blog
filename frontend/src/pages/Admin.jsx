@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import Loading from "../components/Loading"
-import '../components/Post.css'
-import Icon from "../components/Icon";
-import PostForm from "../components/PostForm";
+import Loading from "@components/Loading"
+import '@components/Post.css'
+import Icon from "@components/Icon";
+import PostForm from "@components/PostForm";
 import './Admin.css'
-import useApi from "../hooks/useApi";
-import UseToken from "../hooks/UseToken";
-
+import useApi from "@hooks/useApi";
+import UseToken from "@hooks/UseToken";
+import useMsg from "@hooks/useMsg";
+import useRouter from "@hooks/useRouter";
 
 const routes = {
   '/update': {
@@ -17,104 +18,103 @@ const routes = {
     component: PostForm,
     type: 'create'
   },
-  '/manager': {
-    requireAuth: true
-  },
 }
 
 function Admin() {
   const [posts, setPosts] = useState([]);
-  const [info, setInfo] = useState({})
-  const [selected, setSelected] = useState(0);
-  const [page, setPage] = useState('/manager')
-  const [isHub, setHub] = useState(true);
   const { token, isLoggedIn } = UseToken();
-  const { setLoading, loading, fetchData, error } = useApi()
+  const { loading, fetchData } = useApi()
+  const { navigate, setAlterPost} = useRouter()
+  const { setIsModalOpen, setMsg, setIsChoice ,exit, setExit, selected, setSelected} = useMsg()
+
 
   useEffect(() => {
     const getPosts = async () => {
-      try {
-        const rslt = await fetchData('get','https://web-blog-inky.vercel.app/posts') || []
-        if (rslt) {
-          setPosts(rslt)
-        } else if (error) {
-          alert('There was an error fetching the posts')
-        }
-      } catch {
-        alert('There was an error fetching the posts')
+      const rslt = await fetchData('get', 'https://web-blog-inky.vercel.app/posts') || false
+      if (rslt) {
+        setPosts(rslt)
+      } else {
+        setIsModalOpen(true)
+        setMsg('There was an error fetching the posts')
+        setIsChoice(false)
       }
+
     };
     getPosts();
-  }, [isHub]);
+  }, []);
 
-  const handleDelete = async (id, song) => {
-    if (confirm(`Are you sure you want to delete the following post? \n${id}: ${song}`)) {
-        const rslt = await fetchData('delete', `https://web-blog-inky.vercel.app/delete/${id}`,{}, token)
-        console.log(rslt)
-        if (rslt) {
-          setHub(false)
-          alert('Post deleted succesfully')
-          setHub(true)
-        } else {
-          alert('There was an error deleting the posts')
+  useEffect(() => {
+    const deleteMsg = async () => {
+      if (exit === 1) {
+        const rslt = await fetchData('delete', `https://web-blog-inky.vercel.app/delete/${selected}`, {}, token)
+        console.log('AAAAAAAAAA', rslt)
+        if(rslt){
+          setExit(0)
+          setIsChoice(false)
+          setMsg('Deleted Successfully')
+        } else{
+          setExit(0)
+          setIsChoice(false)
+          setMsg('Something went wrong')
         }
-    } 
-  }
+      } else if (exit === 2) {
+        setIsModalOpen(false)
+        setExit(0)
+      }
+    }
+    console.log(exit)
+    deleteMsg()
+  }, [selected, exit]);
 
-  let CurrentPage = () => <h1>404</h1>
 
-  if (isLoggedIn) {
-    CurrentPage = routes[page].component
+  const handleDelete = async (id,song) => {
+    setSelected(id)
+    setIsChoice(true)
+    setMsg(`Are you sure you want to delete the following post? ${id}: ${song}`)
+    setIsModalOpen(true)
   }
 
   return (
     <Loading isLoading={loading}>
       {!loading &&
-        (isHub ?
-          (
-            <div className="table">
-              <div className="row">
-                <h2>ID</h2>
-                <h2>Song</h2>
-                <h2>Actions</h2>
-                <div />
-              </div>
-              {posts.map((item, index) => ( // map iterator for all the posts recieved from the api
-                <div className="row" key={index}>
-                  <h2 className="ident"> {item.id}</h2>
-                  <h2 className="title"> {item.name}</h2>
-                  <div className="icons">
-                    <Icon type="editIcon"
-                      onClick={() => {
-                        setPage('/update')
-                        setHub(false)
-                        setSelected(item.id)
-                        setInfo(item)
-                      }}
-                      enabled={true} />
-                    <Icon type="deleteIcon"
-                      onClick={() => {
-                        handleDelete(item.id, item.name)
-                      }}
-                      enabled={true} />
-                  </div>
-                </div>
-              ))}
-
-              <div className="bottomTable">
-                <Icon type="addIcon" enabled={true}
-                  onClick={() => {
-                    setPage('/create')
-                    setHub(false)
-                    setSelected(1)
-                  }}
-                />
-              </div>
+        (
+          <div className="table">
+            <div className="row">
+              <h2>ID</h2>
+              <h2>Song</h2>
+              <h2>Actions</h2>
+              <div />
             </div>
-          ) :
-          (
-            <CurrentPage id={selected} currentInfo={info} type={routes[page].type} setHub={setHub} setLoading={setLoading} />
-          )
+            {posts.map((item, index) => ( // map iterator for all the posts recieved from the api
+              <div className="row" key={index}>
+                <h2 className="ident"> {item.id}</h2>
+                <h2 className="title"> {item.name}</h2>
+                <div className="icons">
+                  <Icon type="editIcon"
+                    onClick={() => {
+                      setAlterPost({ id: item.id, action: 'update', currentInfo: item })
+                      navigate('/update')
+                    }}
+                    enabled={true} />
+                  <Icon type="deleteIcon"
+                    onClick={() => {
+                      setSelected(item.id)
+                      handleDelete(item.id, item.name)
+                    }}
+                    enabled={true} />
+                </div>
+              </div>
+            ))}
+
+            <div className="bottomTable">
+              <Icon type="addIcon" enabled={true}
+                onClick={() => {
+                  setAlterPost({ id: 1, action: 'create' })
+                  navigate('/create')
+                }}
+              />
+            </div>
+          </div>
         )
       }
     </Loading>

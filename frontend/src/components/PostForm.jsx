@@ -7,6 +7,9 @@ import UseToken from '@hooks/UseToken.jsx'
 import { object, string, number, date } from 'yup';
 import useForm from '@hooks/useForm.jsx'
 import useApi from '@hooks/useApi.jsx'
+import useMsg from '@hooks/useMsg.jsx'
+import useRouter from '@hooks/useRouter.jsx'
+import Loading  from '@components/Loading.jsx'
 
 let postSchema = object({
     name: string().max(255).required(),
@@ -19,28 +22,41 @@ let postSchema = object({
     content: string().required()
 });
 
-function PostForm({ type, id, currentInfo, setLoading, setHub }) {
+function PostForm() {
     const { token } = UseToken();
     const { values, setValue, validate, errors } = useForm(postSchema)
     const [url, setUrl] = useState('')
     const [isOk, setOk] = useState(true)
-    const { fetchData } = useApi()
+    const { fetchData, isLoading, setLoading} = useApi()
+    const { isHub, setIsHub, alterPost, navigate } = useRouter()
+    const {setIsModalOpen, setMsg, setIsChoice, exit, setExit } = useMsg()
 
     useEffect(() => {
-        if (type === 'update') {
+        if (alterPost.action === 'update') {
             setUrl('https://web-blog-inky.vercel.app/update')
-            setValue('name', currentInfo.name)
-            setValue('artist', currentInfo.artist)
-            setValue('album', currentInfo.album)
-            setValue('rank', currentInfo.rank)
-            setValue('music', currentInfo.music)
-            setValue('cover_art', currentInfo.cover_art)
-            setValue('album_date', new Date(currentInfo.album_date).toISOString().split('T')[0])
-            setValue('content', currentInfo.content)
+            setValue('name', alterPost.currentInfo.name)
+            setValue('artist', alterPost.currentInfo.artist)
+            setValue('album', alterPost.currentInfo.album)
+            setValue('rank', alterPost.currentInfo.rank)
+            setValue('music', alterPost.currentInfo.music)
+            setValue('cover_art', alterPost.currentInfo.cover_art)
+            setValue('album_date', new Date(alterPost.currentInfo.album_date).toISOString().split('T')[0])
+            setValue('content', alterPost.currentInfo.content)
         } else {
             setUrl('https://web-blog-inky.vercel.app/create')
         }
     }, []);
+
+    useEffect(() => {
+        if(exit===1){
+            setIsModalOpen(false)
+            setExit(0)
+            navigate('/admin')
+        } else if(exit===2){
+            setIsModalOpen(false)
+            setExit(0)
+        }
+      }, [exit]);
 
     const handleValidate = async () => {
         if (await validate()) {
@@ -50,23 +66,20 @@ function PostForm({ type, id, currentInfo, setLoading, setHub }) {
             setOk(false)
             setLoading(false)
         }
-        console.log('values', values)
     }
 
-    const handleExit = async () => {
-        if (confirm('Changes will not be saved \nDo you want to exit?')) {
-            setHub(true)
-        }
+    const handleExit = () => {
+        setIsChoice(true)
+        setMsg('Changes will not be saved. Do you want to exit?')
+        setIsModalOpen(true)
     }
 
     const handleSave = async () => {
-        setLoading(true)
-        console.table(values)
         try {
             setOk(true)
             const body = {}
-            if (type === 'update') {
-                body.id = id
+            if (alterPost.action === 'update') {
+                body.id = alterPost.id
             }
             body.name = values.name
             body.artist = values.artist
@@ -79,15 +92,20 @@ function PostForm({ type, id, currentInfo, setLoading, setHub }) {
 
             const rslt = await fetchData('post', url, body, token)
             if (rslt) {
-                alert('The changes have been saved')
+                setIsChoice(false)
+                setMsg('The changes have been saved')
+                setIsModalOpen(true)
             } else {
-                alert('There was an error saving the post')
+                setIsChoice(false)
+                setMsg('There was an error saving the post idk')
+                setIsModalOpen(true)
             }
-            setLoading(false)
-            setHub(true)
+            navigate('/admin')
 
         } catch {
-            alert('There was an error saving the post')
+            setIsChoice(false)
+            setMsg('There was an error saving the post')
+            setIsModalOpen(true)
         }
 
     }
@@ -96,10 +114,10 @@ function PostForm({ type, id, currentInfo, setLoading, setHub }) {
         setValue(name, value)
     };
 
-
     return (
+        <Loading isLoading={isLoading}>
         <div className='formContainer'>
-            <div className='idContainer'>Post ID: {id}</div>
+            <div className='idContainer'>Post ID: {alterPost.id}</div>
 
             <Input label='Song' value={values.name} size="normalInput"
                 onChange={(value) => setValueForm('name', value)} max={255}
@@ -135,14 +153,11 @@ function PostForm({ type, id, currentInfo, setLoading, setHub }) {
             }
 
         </div>
+        </Loading>
     )
 }
 
 PostForm.propTypes = {
-    type: PropTypes.string,
-    id: PropTypes.number,
-    currentInfo: PropTypes.object,
-    setHub: PropTypes.func,
     setLoading: PropTypes.func
 }
 

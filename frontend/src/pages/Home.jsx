@@ -3,21 +3,29 @@ import Post from '@components/Post.jsx'
 import Loading from '@components/Loading.jsx';
 import './Home.css'
 import useApi from '@hooks/useApi.jsx';
+import useMsg from '@hooks/useMsg';
+import Message from '@components/Message';
 
 function Home() {
   const [posts, setPosts] = useState([]);
   const { loading, fetchData, error } = useApi()
+  const { setIsActive, setMsg, setIsChoice } = useMsg()
+
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const rslt = await fetchData('get', 'https://web-blog-inky.vercel.app/posts') || []
+        const rslt = await fetchData('get', 'https://web-blog-inky.vercel.app/posts') || false
         if (rslt) {
           setPosts(rslt)
         } else if (error) {
-          alert('There was an error fetching the posts')
+          setIsModalOpen(true)
+          setMsg('There was an error fetching the posts')
+          setIsChoice(false)
         }
       } catch {
-        alert('There was an error fetching the posts')
+        setIsModalOpen(true)
+        setMsg('There was an error fetching the posts')
+        setIsChoice(false)
       }
     };
     getPosts();
@@ -26,11 +34,11 @@ function Home() {
 
   return (
     <Loading isLoading={loading}>
-      <div className='postsContainer'>
-        {posts.map((item, index) => ( // map iterator for all the posts recieved from the api
-          <Post jsonData={item} key={index} />
-        ))}
-      </div>
+        <div className='postsContainer'>
+          {posts.map((item, index) => ( // map iterator for all the posts recieved from the api
+            <Post jsonData={item} key={index} />
+          ))}
+        </div>
     </Loading>
   )
 }

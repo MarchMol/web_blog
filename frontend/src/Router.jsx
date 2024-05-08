@@ -1,4 +1,4 @@
-import {useEffect, useState, createContext, useContext} from 'react'
+import { useEffect, useState, createContext, useContext } from 'react'
 
 import useRouter from './hooks/useRouter.jsx'
 import Login from '@pages/Login.jsx'
@@ -7,6 +7,7 @@ import Admin from '@pages/Admin.jsx'
 import './Router.css'
 import UseToken from '@hooks/UseToken.jsx'
 import NavBar from '@pages/NavBar.jsx'
+import PostForm from '@components/PostForm.jsx'
 
 
 const routes = {
@@ -18,30 +19,35 @@ const routes = {
         component: Login,
         requireAuth: false
     },
+    '/logout': {
+        component: Admin,
+        requireAuth: true
+    },
     '/admin': {
         component: Admin,
         requireAuth: true
     },
-    '/logout':{
-        component: Admin,
-        requireAuth: true
+    '/update': {
+        component: PostForm,
+        type: 'update'
     },
-    '/post':{
-        component: Admin,
-        requireAuth: true
-    }
+    '/create': {
+        component: PostForm,
+        type: 'create'
+    },
+
 }
 
 const Router = () => {
     const { page, navigate } = useRouter();
     const { token, setToken, isLoggedIn } = UseToken();
-    
+
     useEffect(() => {
-        if (isLoggedIn){
+        if (isLoggedIn) {
             document.body.style.background = 'rgb(105,229,215)';
             document.body.style.background = 'linear-gradient(140deg, rgba(105,229,215,1) 0%, rgba(89,164,125,1) 50%, rgba(63,70,111,1) 100%)';
             document.body.style.backgroundAttachment = 'fixed';
-        } else{
+        } else {
             document.body.style.background = 'rgb(229,123,105)';
             document.body.style.background = 'linear-gradient(140deg, rgba(229,123,105,1) 0%, rgba(164,89,164,1) 50%, rgba(63,87,111,1) 100%)';
             document.body.style.backgroundAttachment = 'fixed';
@@ -50,26 +56,25 @@ const Router = () => {
 
 
     const handleLogin = (signal) => {
-        if(signal){
+        if (signal) {
             navigate('/home')
         }
     };
 
     let CurrentPage = () => <h1>404</h1>
 
-    console.log(routes[page]);
-    if(routes[page].requireAuth && !token){
+    if (routes[page].requireAuth && !token) {
         return <h1>Acceso no Autorizado</h1>
     }
 
     CurrentPage = routes[page].component
 
-    return(
+    return (
         <>
-        <NavBar/>
-        <div className='page'>
-        <CurrentPage onSignal={handleLogin}/>
-        </div>
+            <NavBar />
+            <div className='page'>
+                <CurrentPage onSignal={handleLogin} />
+            </div>
         </>
     )
 }

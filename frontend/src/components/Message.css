@@ -1,0 +1,31 @@
+.disableMssg {
+    background-color: rgba(0, 0, 0, 0.514);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.msgContainer {
+    background: linear-gradient(0deg, #412653, #3F576F);
+    background-color: aqua;
+    padding: 2rem;
+    border-radius: 2vh;
+    box-shadow: 0px 0px 2vh 0px rgba(0, 0, 0, 0.164); /* Add shadow */
+    
+}
+
+.disableMssg h2{
+    color: white;
+}
+
+.msgOptions{
+    display: flex;
+    gap: 2vw;
+    justify-content: center;
+}
