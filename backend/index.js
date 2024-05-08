@@ -79,7 +79,7 @@ app.post('/create/', [
     return res.status(400).json({ errors: 'Formato incorrecto' })
   }
   const {
-    name, album, artist, music, coverArt, content, rank, albumDate
+    name, album, artist, music, cover_art, content, rank, album_date
   } = req.body
 
   try {
@@ -87,7 +87,7 @@ app.post('/create/', [
     const token = authHeader.split(' ')[1]
     try {
       validateToken(token)
-      const posts = await createPost(name, album, artist, music, coverArt, content, rank, albumDate)
+      const posts = await createPost(name, album, artist, music, cover_art, content, rank, album_date)
       res.status(200)
       res.json(posts)
     } catch {
@@ -115,7 +115,7 @@ app.post('/update/', [
     return res.status(400).json({ errors: 'Formato incorrecto' })
   }
   const {
-    id, name, album, artist, music, coverArt, content, rank, albumDate
+    id, name, album, artist, music, cover_art, content, rank, album_date
   } = req.body
 
   try {
@@ -123,7 +123,7 @@ app.post('/update/', [
     const token = authHeader.split(' ')[1]
     try {
       validateToken(token)
-      const posts = await updatePost(id, name, album, artist, music, coverArt, content, rank, albumDate)
+      const posts = await updatePost(id, name, album, artist, music, cover_art, content, rank, album_date)
       res.status(200)
       res.json(posts)
     } catch {

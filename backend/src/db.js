@@ -37,13 +37,13 @@ export async function authUser (username, password) {
 }
 
 // Create, auth
-export async function createPost (songName, album, artist, music, coverArt, content, rank, albumDate) {
+export async function createPost (name, album, artist, music, coverArt, content, rank, albumDate) {
   let client
   try {
     client = await conn.connect()
     const result = await conn.query(
             `INSERT INTO music_blog(name, album, artist, music, cover_art, content, rank, album_date, post_date) 
-             VALUES ('${songName}','${album}','${artist}','${music}','${coverArt}','${content}',${rank},'${albumDate}', CURRENT_TIMESTAMP);`
+             VALUES ('${name}','${album}','${artist}','${music}','${coverArt}','${content}',${rank},'${albumDate}', CURRENT_TIMESTAMP);`
     )
     return result.rowCount[0]
   } catch (error) {
@@ -56,14 +56,14 @@ export async function createPost (songName, album, artist, music, coverArt, cont
 }
 
 // Update, auth
-export async function updatePost (id, songName, album, artist, music, coverArt, content, rank, albumDate) {
+export async function updatePost (id, name, album, artist, music, coverArt, content, rank, albumDate) {
   let client
   try {
     client = await conn.connect()
     const result = await conn.query(
             `UPDATE music_blog
             SET 
-                name = '${songName}',
+                name = '${name}',
                 album = '${album}',
                 artist = '${artist}',
                 music = '${music}',
