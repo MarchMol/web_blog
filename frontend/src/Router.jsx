@@ -1,12 +1,12 @@
 import { React, useEffect } from 'react'
-import useRouter from './hooks/useRouter.jsx'
+import useRouter from '@hooks/useRouter.jsx'
 import Login from '@pages/Login.jsx'
 import Home from '@pages/Home.jsx'
 import Admin from '@pages/Admin.jsx'
 import './Router.css'
 import useToken from '@hooks/useToken.jsx'
-import NavBar from '@pages/NavBar.jsx'
-import PostForm from '@components/PostForm.jsx'
+import NavBar from '@components/NavBar.jsx'
+import PostForm from '@pages/PostForm.jsx'
 
 const routes = {
   '/home': {

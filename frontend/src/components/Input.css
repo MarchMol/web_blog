@@ -65,8 +65,7 @@
 
 @media only screen and (max-width: 720px) {
     .smallInput{
-        min-width: 100%
+        width: calc(100% - 4vh);
+        max-width: calc(100% - 4vh)
     }
-    
-
 }

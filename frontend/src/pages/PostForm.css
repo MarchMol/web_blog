@@ -6,7 +6,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60vw;
+    width: 45vw;
+    max-width: 70vw;
     color: white;
 }
 
