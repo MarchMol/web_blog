@@ -118,8 +118,17 @@
     }
 
     .hitbox{
-        max-width: 100%;
+        max-width: 70%;
         max-height: 100%;
+    }
+
+    .hitbox:hover .cover{
+        margin-left: -10%;
+        
+    }
+    
+    .hitbox:hover .vinyl{
+        margin-left: 10%;
     }
 
     .postContainer p, .postContainer li{
