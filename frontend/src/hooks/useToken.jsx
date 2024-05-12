@@ -2,12 +2,17 @@ import { React, useState, useEffect, useContext, createContext } from 'react'
 import { jwtDecode } from 'jwt-decode'
 import PropTypes from 'prop-types'
 
-const TokenContext = createContext({ useToken: () => {}, checkLogin: () => {} })
+const TokenContext = createContext({ token: null, useToken: () => {}, checkLogin: () => {} })
 
 const TokenProvider = ({ children }) => {
   const [token, setToken] = useState(
     localStorage.getItem('access_token') || null
   )
+
+  useEffect(() => {
+    localStorage.setItem('access_token', token)
+  }, [])
+
   useEffect(() => {
     localStorage.setItem('access_token', token)
   }, [token])

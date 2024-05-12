@@ -9,9 +9,7 @@ function App () {
         <TokenProvider>
             <RouterProvider>
                 <MsgProvider>
-                    <div>
-                        <Router />
-                    </div>
+                    <Router />
                 </MsgProvider>
             </RouterProvider>
         </TokenProvider>
