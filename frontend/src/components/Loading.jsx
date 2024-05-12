@@ -4,7 +4,7 @@ import React from 'react'
 
 const Loading = ({ isLoading, children }) => {
   return (
-    <center>
+    <div className='loadingContainer'>
       {isLoading
         ? (
           <>
@@ -20,7 +20,7 @@ const Loading = ({ isLoading, children }) => {
             </>
           )
           }
-    </center>
+    </div>
   )
 }
 
