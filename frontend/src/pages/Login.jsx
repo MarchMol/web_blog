@@ -26,7 +26,7 @@ function Login ({ onSignal }) {
     const body = {}
     body.username = values.username
     body.password = md5(values.password)
-    const rslt = await fetchData('login', 'https://web-blog-inky.vercel.app/login', body,null)
+    const rslt = await fetchData('login', 'https://web-blog-inky.vercel.app/login', body, null)
     if (rslt) {
       setToken(rslt.access_token)
       onSignal(true)

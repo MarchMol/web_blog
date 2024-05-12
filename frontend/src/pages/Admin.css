@@ -7,13 +7,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 70vw;
+    width: 50vw;
+    max-width: 50vw;
     color: white;
 }
 
 .row{
     display: flex;
-
     border-bottom: 2px solid rgba(0, 0, 0, 0.247);
     width: 100%;
     justify-content: space-between;
@@ -24,30 +24,22 @@
     margin-top: 2vh;
 }
 
-.divider{
-    width: 100%;
-    background-color: black;
-}
-
 .table h2{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     text-align: left;
     font-size: 2.5vh;
-    width: fit-content;
 }
 
 .title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     width: 30vw;
     max-width: 30vw;
     margin-left: 2vw;
 }
 
 .ident{
-    width: 5vw;
-    max-width: 6vw;
-    
+    width: fit-content;
 }
 
 .icons{
@@ -59,6 +51,11 @@
 }
 
 @media only screen and (max-width: 50vh) {
+    
+    .table{
+        width: 60vw;
+        max-width: 60vw;
+    }
     .table h2{
         font-size: 4vw;
     }

@@ -11,18 +11,22 @@ import useRouter from '@hooks/useRouter'
 function Admin () {
   const [posts, setPosts] = useState([])
   const { token } = useToken()
-  const { loading, fetchData, setLoading } = useApi()
+  const { loading, fetchData, error } = useApi()
   const { navigate, setAlterPost } = useRouter()
   const { setIsModalOpen, setMsg, setIsChoice, exit, setExit, selected, setSelected } = useMsg()
 
   useEffect(() => {
     const getPosts = async () => {
-      const rslt = await fetchData('get', 'https://web-blog-inky.vercel.app/posts') || false
-      if (rslt) {
-        setLoading(false)
-        setPosts(rslt)
-        setLoading(false)
-      } else {
+      try {
+        const rslt = await fetchData('get', 'https://web-blog-inky.vercel.app/posts') || false
+        if (rslt) {
+          setPosts(rslt)
+        } else if (error) {
+          setIsModalOpen(true)
+          setMsg('There was an error fetching the posts')
+          setIsChoice(false)
+        }
+      } catch {
         setIsModalOpen(true)
         setMsg('There was an error fetching the posts')
         setIsChoice(false)
@@ -68,12 +72,12 @@ function Admin () {
               <h2>ID</h2>
               <h2>Song</h2>
               <h2>Actions</h2>
-              <div />
+              <div className='tem'/>
             </div>
             {posts.map((item, index) => ( // map iterator for all the posts recieved from the api
               <div className="row" key={index}>
-                <h2 className="ident" key={index}>{item.id}</h2>
-                <h2 className="title"key={index}>{item.name}</h2>
+                <h2 className="ident">{item.id}</h2>
+                <h2 className="title">{item.name}</h2>
                 <div className="icons">
                   <Icon type="editIcon"
                     onClick={() => {
