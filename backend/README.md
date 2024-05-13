@@ -1,6 +1,10 @@
 # Web Blog Backend
 This backend application is built using Express.js and provides endpoints for managing posts in a music blog. It includes authentication using JSON Web Tokens (JWT) and supports CRUD operations for posts.
 
+## Project Overview: 
+## Deployment
+The current deployment for the server-side of this application was achieved using vercel's web service using <a href="https://www.youtube.com/watch?v=LZQ5n4PK1jM"></a>this tutorial as guide<br>
+`https://web-blog-inky.vercel.app/`
 ## Setup
 1. **Clone the repository**
 2. **Install dependencies by running:**<br>
@@ -29,11 +33,6 @@ in this respository an unused file called schema.sql contains all the necessary 
 - 3.3. **Recomendations if you want to run it**<br>
 Don't forget to set the POSTGRES_URL link as an enviroment variable inside of vercel, also dont forget to link the database storage and the project
 in vercel or else it won't work. Finally, dont be scared to create redeployments if something doesn't work at first.
-
-## API
-As it as mentioned before, the current project runs on an already deployed vercel api.
-The base link for the http requests is the following:<br>
-`https://web-blog-inky.vercel.app/`
 
 ## Endpoints
 - GET /posts: Retrieve all posts.<br>

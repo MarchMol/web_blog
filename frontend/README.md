@@ -1,6 +1,9 @@
 # CLIENT web blog
-## Project Overview: 
-Provide a brief introduction to the project, mentioning that it's a web blog client built using Vite and React. Briefly describe its purpose and key features.
+
+## Current deployment:
+The current deployment for the client-side of this aplication was achieved using <a href="https://www.youtube.com/watch?v=tVzpC5_AC8M">this tutorial</a> as a guide. <br>
+`https://beat-buzz-d4afcd.netlify.app/`
+
 ## set Up : 
 1. **Install Vite:**
 Before setting up the Vite-React client, ensure that Vite is installed on your device. If not, you can install it globally using npm with the following command:
@@ -13,12 +16,9 @@ Before setting up the Vite-React client, ensure that Vite is installed on your d
 4. **Start the Development Server:**
  After installing dependencies, start the development server by running vite or `npm run dev` if configured in the project's scripts.
 5. **Access the Application:**
- Once the server is running, access the application in your web browser by navigating to `http://localhost:3000` (it may not be the port 3000 in your device).
+ Once the server is running, access the application in your web browser by navigating to `http://localhost:3000` (or whatever port you may want to use).
 
-## Usage: 
-Explain how to use the web blog client, including any commands or scripts necessary for development and deployment.
 ## Folder Structure: 
-Provide an overview of the project's folder structure, highlighting important directories such as src, components, and styles.
 `src/`:
 Contains all the logic and style of the web blog.
 `assets/`
@@ -31,11 +31,10 @@ Contains all hooks used throughout the project
 Contains logic and style for the pages to render
 
 ## Dependencies: 
-js-md5: This library is used for generating MD5 hashes, which can be useful for various purposes such as hashing passwords or creating checksums.
-jwt-decode: This library is used for decoding JSON Web Tokens (JWT) in JavaScript, allowing you to extract information from JWTs without requiring a server-side implementation.
+**js-md5**: This library is used for generating MD5 hashes, which can be useful for various purposes such as hashing passwords or creating checksums.
+**jwt-decode**: This library is used for decoding JSON Web Tokens (JWT) in JavaScript, allowing you to extract information from JWTs without requiring a server-side implementation.
 
 ## File Structure: 
-
 ### Api
 The useApi hook is designed to facilitate data fetching and management in React applications. It provides functionality for making HTTP requests with various methods such as GET, POST, and DELETE. Additionally, it handles loading states and error handling.
 
