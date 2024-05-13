@@ -4,6 +4,9 @@ This repository contains both the frontend and backend components of the a music
 ## Project Overview:
 Welcome to Beat Buzz! Beat Buzz is a music blog designed using React and Vite. The client side interfaces with a Restful API specifically developed for this project, enabling authorization functionalities and CRUD operations on the blog posts for signed in users. <br>
 You can check out Beat Buzz's current deployment by clicking on <a href="https://beat-buzz-d4afcd.netlify.app/">this link!</a> Sprites may take a while to load at first due to the third-party deployment service used.
+Also, you can use the following login credentials to test the post management side of the blog: <br>
+`Username: dennis`<br>
+`Password: 54321`<br>
 
 ## Frontend (Client)
 The frontend/ folder contains the client-side codebase of the Web Blog application. It is built using React.js in concordance with Vite and styled with normal CSS.
