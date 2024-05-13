@@ -46,7 +46,9 @@ function Login ({ onSignal }) {
                             onChange={(value) => setValue('username', value)} size='normalInput' max={255} />
                         <Input label='Password' type='password' value={values.password}
                             onChange={(value) => setValue('password', value)} size='normalInput' max={255} />
-                        <Button text="Login" onClick={handleSubmit} />
+                        <div className='center'>
+                          <Button text="Login" onClick={handleSubmit} />
+                        </div>
                     </form>
                 </div>
         </Loading>
